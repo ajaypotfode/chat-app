@@ -1,14 +1,14 @@
 import mongoose from "mongoose"
 
-const messages = new mongoose.Schema({
+const singleMessage = new mongoose.Schema({
     sender: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users',
-        required: true
+        // required: true
     },
     content: {
         type: String,
-        required: true
+        // required: true
     },
     createdAt: {
         type: Date,
@@ -23,11 +23,21 @@ const messageModel = new mongoose.Schema({
         ref: "chats",
         required: true
     },
-    date: {
-        type: String,
+    // bio: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "users",
+    // },
+    receiverId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users",
         required: true
     },
-    messages: [messages]
+    senderId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users",
+        required: true
+    },
+    messages: [singleMessage]
 
 }, { timestamps: true })
 

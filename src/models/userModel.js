@@ -1,5 +1,4 @@
 import mongoose from "mongoose"
-import { unique } from "next/dist/build/utils"
 
 const userSchema = new mongoose.Schema({
     userName: {
@@ -10,8 +9,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, "Email Is Required"],
         unique: [true, "email has to be Unique"],
-        trim: true
-
+        trim: true,
     },
     password: {
         type: String,
@@ -20,6 +18,9 @@ const userSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    bio: {
+        type: String,
     }
 })
 
