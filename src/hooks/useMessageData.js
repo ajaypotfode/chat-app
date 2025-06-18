@@ -3,6 +3,7 @@
 import { addMessage, getCurrentChat, getLoginUser, getMessage, getMessageData, getSocketMessage } from "@/redux/slice/messageSlice";
 import { useDispatch, useSelector } from "react-redux"
 import socket from '@/utils/clientSocket'
+import { clearUnseenMessageCount } from "@/redux/slice/chatSlice";
 // import { toast } from "react-toastify";
 // import { sendError } from "next/dist/server/api-utils";
 
@@ -20,20 +21,21 @@ const UseMessageData = () => {
     // }
 
     const fetchMessageData = (messageData) => {
-        // dispatch(getCurrentChat(messageData))
+        // if (messageData.currentuser !== messageData.receiverId) {
+        //     dispatch(clearUnseenMessageCount(messageData.chatId))
+        // }
         dispatch(getMessage(messageData))
     }
 
 
 
     const addMessageData = (chatId, receiverId) => {
+        // console.log("sender Id is :",currentChat.senderId);
 
-
-        console.log("sender Id is :",currentChat.senderId);
-        
         const data = {
             content: messageData.message,
             sender: currentChat.senderId,
+            // seen: fasle,
             chatId: chatId,
             // participants
         }

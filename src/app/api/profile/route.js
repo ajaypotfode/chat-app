@@ -8,7 +8,7 @@ export const GET = async () => {
         const { userId } = await serverSession()
         await connectDatabase()
 
-        const result = await User.findById(userId)
+        const result = await User.findById(userId).select('-password')
 
         return NextResponse.json({ message: "User Profile Fetched SuccessFully!!", success: true, result: result }, { status: 200 })
     } catch (error) {

@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema({
     },
     bio: {
         type: String,
+        default: "Hey I am Using, Chat Box"
     }
 })
 

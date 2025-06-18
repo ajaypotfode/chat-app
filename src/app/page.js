@@ -5,12 +5,63 @@ import Sidebar from "@/components/Sidebar";
 import UseAuthData from "@/hooks/useAuthData";
 import UseChatData from "@/hooks/useChatData";
 import UseMessageData from "@/hooks/useMessageData";
+import { clearUnseenMessageCount, getLastMessageDate, getUnseenMessageCount } from "@/redux/slice/chatSlice";
+import { getSocketMessage } from "@/redux/slice/messageSlice";
+import { useEffect } from "react";
+import socket from '@/utils/clientSocket'
+import { useDispatch } from "react-redux";
+import { useSession } from "next-auth/react";
+import Profile from "@/components/Profile";
 // import Image from "next/image";
 
 export default function Home() {
-  const { handleChataData, handleChatForm, fetchChatData, generateChat, handleDeleteChat, chatData, chatForm, chats, } = UseChatData()
-  const { fetchMessageData, addMessageData, messages, messageData, socketMessage,currentChat, handleMessageData } = UseMessageData()
-  const { getUserLogout } = UseAuthData()
+  const { handleChataData, handleChatForm, fetchChatData, generateChat, handleDeleteChat, chatData, chatForm, chats, formatedLastMessaeDate} = UseChatData()
+  const { fetchMessageData, addMessageData, messages, messageData, socketMessage, currentChat, handleMessageData } = UseMessageData()
+
+  const dispatch = useDispatch()
+  const { data: session, status } = useSession()
+
+
+  useEffect(() => {
+    if (!chats || chats.length === 0) return;
+
+    chats.forEach(chat => {
+      socket.emit('join-chat', chat._id)
+    });
+
+    // console.log("loged in User Is :", Math.floor(random);
+
+  }, [chats])
+
+
+  useEffect(() => {
+    if (status !== 'authenticated') return
+
+    // console.log("session User Is :", session.user?.userId);
+
+    socket.on('private-message', (message) => {
+      dispatch(getSocketMessage(message))
+
+      // console.log("message sender :",message.sender!==session.user?.userId);
+
+      if (message.sender?.toString() !== session.user?.userId?.toString()) {
+        dispatch(getUnseenMessageCount({ count: 1, chatId: message.chatId }))
+      }
+    });
+
+    socket.on("chat-data", (chatData) => {
+      dispatch(getLastMessageDate(chatData))
+    })
+
+    return () => {
+      socket.off('private-message');
+      socket.off('chat-data')
+    };
+  }, [session])
+
+
+
+
   return (
     <div className="flex h-screen">
       <Sidebar
@@ -19,25 +70,33 @@ export default function Home() {
         handleDeleteChat={handleDeleteChat}
         fetchChatData={fetchChatData}
         fetchMessages={fetchMessageData}
-        logoutUser={getUserLogout}
+        // logoutUser={getUserLogout}
+        currentUser={session?.user}
+        formatedLastMessaeDate={formatedLastMessaeDate}
+        // getColor={getColor}
       />
       <ChatBox
         // fetchMessageData={ }
         addMessageData={addMessageData}
         messageData={messageData}
         messages={messages}
-        handleMessageData={handleMessageData} 
+        handleMessageData={handleMessageData}
         socketMessage={socketMessage}
+        currentUser={session?.user?.userId}
         currentChat={currentChat}
-        />
+
+      />
 
       {
-        chatForm && <AddChat
+        chatForm === 'addChat' && <AddChat
           handleChatForm={handleChatForm}
           generateChat={generateChat}
           chatData={chatData}
           handleChataData={handleChataData}
         />
+      }
+      {
+        chatForm === 'profile' && <Profile handlechatForm={handleChatForm} />
       }
     </div>
 

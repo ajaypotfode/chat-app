@@ -12,7 +12,7 @@ export const POST = async (req) => {
             { _id: userId },
             { $set: { bio } },
             { upsert: true, new: true }
-        )
+        ).select('-password')
 
         return NextResponse.json({ message: "Bio Updated Succefully", success: true, result: result }, { status: 200 })
     } catch (error) {

@@ -21,8 +21,7 @@ export const signInUser = createAsyncThunk("signin", async (loginData, { rejectW
             redirect: false,
             callbackUrl: "/",
         })
-
-        console.log("user Sign in is :",response);
+        // console.log("user Sign in is :",response);
         
         return response
     } catch (error) {

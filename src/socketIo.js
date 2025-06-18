@@ -49,6 +49,7 @@ io.on('connection', (socket) => {
 
     // this is use to send message who is having chatId 
     io.to(chatId).emit('private-message', message)
+    io.to(chatId).emit("chat-data", { date: message.createdAt, chatId: message.chatId })
 
     // const receiverSocketId = onlineUser[userId]
     // currentChat[chatId] = { content, sender, chatId }
@@ -60,16 +61,6 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('User disconnected:', socket.id);
   });
-
-  // socket.on('disconnect', () => {
-  //   console.log('User disconnected:', socket.id)
-  //   for (const userId in onlineUser) {
-  //     if (onlineUser[userId] === socket.id) {
-  //       delete onlineUser[userId]
-  //       break
-  //     }
-  //   }
-  // })
 })
 
 server.listen(4000, () =>

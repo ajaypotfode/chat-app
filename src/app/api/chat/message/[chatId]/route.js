@@ -8,7 +8,7 @@ import { NextResponse } from "next/server"
 export const GET = async (req, { params }) => {
     const { chatId } = await params
     const receiverId = req.nextUrl.searchParams.get("receiverId")
-    const { userId } = await serverSession(req)
+    const { userId } = await serverSession()
     await connectDatabase()
     try {
 
@@ -16,7 +16,13 @@ export const GET = async (req, { params }) => {
 
         await Messages.findOneAndUpdate(
             { chatId },
-            { $set: { receiverId, senderId: userId } }
+            { $set: { receiverId, senderId: userId}}//this is use to target element from an array "messages.$[elem].seen"(elem will be anything eg.msg)
+            // {
+            //     arrayFilters: [
+            //         { 'elem.sender': { $ne: userId }, 'elem.seen': false }
+            //     ]
+            //     //it is use to filter the object from array(elem will be anything)
+            // }
         );
 
         // and here get Entire chat Messages
@@ -54,6 +60,8 @@ export const POST = async (req, { params }) => {
         ).populate("receiverId", "userName")
 
 
+
+
         // const messageData= await result.populate('message',"")
 
         // await Chat.findByIdAndUpdate(chatId,{
@@ -63,7 +71,7 @@ export const POST = async (req, { params }) => {
         const messageData = result.toObject()
 
         // add Last Date or time of 
-        await Chat.findOneAndUpdate({ chatId },
+        await Chat.findOneAndUpdate({ _id: chatId },
             { $set: { lastMessageDate: messageData.updatedAt } },
             { new: true }
         )
@@ -81,3 +89,4 @@ export const POST = async (req, { params }) => {
 export const DELETE = async () => {
 
 }
+

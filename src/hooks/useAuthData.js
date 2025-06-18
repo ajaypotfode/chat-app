@@ -3,6 +3,7 @@ import { getLoginData, getSignupData, signInUser, signupUser } from "@/redux/sli
 import { signOut } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useDispatch, useSelector } from "react-redux"
+import { toast } from "react-toastify"
 
 const UseAuthData = () => {
     const dispatch = useDispatch()
@@ -21,17 +22,27 @@ const UseAuthData = () => {
         dispatch(getLoginData({ ...loginData, [name]: value }))
     }
 
-    const getUserSignUP = (e) => {
+    const getUserSignUP =async (e) => {
         e.preventDefault();
-        dispatch(signupUser(signUpData))
+       const response=await dispatch(signupUser(signUpData)).unwrap()
+       if (!response.success) {
+        toast.error(`${response.message}`)
+        return
+       }
+
+       router.push('/login')
     }
 
     const getUserLogin = async (e) => {
         e.preventDefault();
         const response = await dispatch(signInUser(loginData)).unwrap()
-        if (response.ok) {
-            router.push('/')
+        if (!response.ok) {
+            // router.push('/')
+            toast.error(`${response.error}`)
+            return
+            //  window.location.href = "/dashboard"
         }
+        window.location.href = '/'
     }
 
     const getUserLogout = async () => {

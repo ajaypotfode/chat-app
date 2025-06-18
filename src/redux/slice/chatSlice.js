@@ -60,7 +60,8 @@ export const getUsers = createAsyncThunk("getUsers", async (userData, { rejectWi
 const initialState = {
     chatData: {},
     chats: [],
-    chatForm: false,
+    chatForm: null,
+    // avatarBg:{},
 }
 
 
@@ -71,15 +72,41 @@ const chatSlice = createSlice({
         getChatData: (state, action) => {
             state.chatData = action.payload
         },
+        getLastMessageDate: (state, action) => {
+            const { chatId, date, unseenCount } = action.payload
+            const chat = state.chats.find(chat => chat._id === chatId)
+            if (chat) {
+                chat.lastMessageDate = date
+            }
+        },
+        getUnseenMessageCount: (state, action) => {
+            // const { chatId, unseenCount } = action.payload
+            const { count, chatId } = action.payload
+            const chat = state.chats.find(chat => chat._id === chatId)
+            if (chat) {
+                chat.unseenCount = chat.unseenCount + count
+            }
+        },
+        clearUnseenMessageCount: (state, action) => {
+            const chatId = action.payload
+
+            const chat = state.chats.find(chat => chat._id === chatId)
+            if (chat) {
+                chat.unseenCount = 0
+            }
+        },
         getchatForm: (state, action) => {
-            state.chatForm = !state.chatForm
+            if (action.payload === 'addChat') {
+                state.chatData = {}
+            }
+            state.chatForm = action.payload
         },
     },
     extraReducers: (builder) => {
         builder
             .addCase(getChats.fulfilled, (state, action) => {
                 state.chats = action.payload?.result
-                console.log("chats is :", action.payload);
+                // console.log("chats is :", action.payload);
             })
             .addCase(addChats.fulfilled, (state, action) => {
                 state.chatData = {}
@@ -93,5 +120,5 @@ const chatSlice = createSlice({
     }
 })
 
-export const { getChatData, getchatForm } = chatSlice.actions
+export const { getChatData, getchatForm, getLastMessageDate, getUnseenMessageCount, clearUnseenMessageCount } = chatSlice.actions
 export default chatSlice.reducer

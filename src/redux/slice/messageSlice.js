@@ -1,6 +1,6 @@
 
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addChatMessageAPI, getChatMessageAPI } from "@/service/messageApiService";
+import { addChatMessageAPI, clearUnseenMessageAPI, getChatMessageAPI } from "@/service/messageApiService";
 
 
 export const getMessage = createAsyncThunk("getMessage", async (messageData, { rejectWithValue }) => {
@@ -30,11 +30,24 @@ export const addMessage = createAsyncThunk("addMessage", async (messageData, { r
 })
 
 
+export const clearBackendUnseenMessageCount = createAsyncThunk("clearBackendUnseenMessageCount", async (chatId, { rejectWithValue }) => {
+    try {
+        // console.log("call Clear Unseen in Slice");
+        const response = await clearUnseenMessageAPI(chatId)
+        return response
+    } catch (error) {
+        return rejectWithValue(error.respones?.data)
+    }
+})
+
+
+
 const initialState = {
     messageData: {},
     messages: [],
     socketMessage: {},
-    currentChat: {}
+    currentChat: {},
+    // currentReciever:{}
 }
 
 
@@ -50,7 +63,6 @@ const messageSlice = createSlice({
                 // console.log("message s :", action.payload)
                 state.messages[0].messages.push(action.payload)
             }
-
         },
         getCurrentChat: (state, action) => {
             // console.log("current Chat Id is: :", action.payload);
@@ -65,6 +77,10 @@ const messageSlice = createSlice({
                 state.messages = action.payload?.result
                 state.currentChat.chatId = action.payload?.result[0]?.chatId
                 state.currentChat.senderId = action.payload?.result[0]?.senderId
+                state.currentChat.receiverId = action.payload?.result[0]?.receiverId?._id
+
+                // console.log("reciver id in redux:",action.payload?.result[0]?.receiverId?._id);
+
             })
             .addCase(addMessage.fulfilled, (state, action) => {
                 state.messageData = {}

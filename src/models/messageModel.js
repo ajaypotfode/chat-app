@@ -10,6 +10,10 @@ const singleMessage = new mongoose.Schema({
         type: String,
         // required: true
     },
+    seen: {
+        type: Boolean,
+        default: false
+    },
     createdAt: {
         type: Date,
         default: Date.now
@@ -41,6 +45,6 @@ const messageModel = new mongoose.Schema({
 
 }, { timestamps: true })
 
-const Messages = mongoose.models.messages || mongoose.model("messages", messageModel)
+const Messages = mongoose.models.allmessages || mongoose.model("allmessages", messageModel)
 
 export default Messages

@@ -22,11 +22,14 @@ const globalSlice = createSlice({
                 const key = action.type.replace("/fulfilled", "")
                 state.loading[key] = false,
                     delete state.error[key]
+
             })
             .addMatcher(isRejected, (state, action) => {
                 const key = action.type.replace("/rejected", "")
                 state.loading[key] = false,
                     state.error[key] = action.payload?.message
+
+                toast.error(`${action.payload?.message}`)
             })
 
     }
