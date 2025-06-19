@@ -12,10 +12,11 @@ import socket from '@/utils/clientSocket'
 import { useDispatch } from "react-redux";
 import { useSession } from "next-auth/react";
 import Profile from "@/components/Profile";
+import { FormSpinner } from "@/components/Loaders";
 // import Image from "next/image";
 
 export default function Home() {
-  const { handleChataData, handleChatForm, fetchChatData, generateChat, handleDeleteChat, chatData, chatForm, chats, formatedLastMessaeDate} = UseChatData()
+  const { handleChataData, handleChatForm, fetchChatData, generateChat, handleDeleteChat, chatData, chatForm, chats, formatedLastMessaeDate, loading } = UseChatData()
   const { fetchMessageData, addMessageData, messages, messageData, socketMessage, currentChat, handleMessageData } = UseMessageData()
 
   const dispatch = useDispatch()
@@ -73,7 +74,8 @@ export default function Home() {
         // logoutUser={getUserLogout}
         currentUser={session?.user}
         formatedLastMessaeDate={formatedLastMessaeDate}
-        // getColor={getColor}
+        loading={loading}
+      // getColor={getColor}
       />
       <ChatBox
         // fetchMessageData={ }
@@ -93,10 +95,11 @@ export default function Home() {
           generateChat={generateChat}
           chatData={chatData}
           handleChataData={handleChataData}
+          loading={loading}
         />
       }
       {
-        chatForm === 'profile' && <Profile handlechatForm={handleChatForm} />
+        chatForm === 'profile' && <Profile handlechatForm={handleChatForm} loading={loading} />
       }
     </div>
 

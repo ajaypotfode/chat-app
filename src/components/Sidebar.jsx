@@ -1,8 +1,9 @@
 "use client"
 
 import { useEffect } from "react";
+import { PageSpinner } from "./Loaders";
 
-export default function Sidebar({ handleChatForm, chats, fetchChatData, fetchMessages, logoutUser, currentUser, formatedLastMessaeDate }) {
+export default function Sidebar({ handleChatForm, chats, fetchChatData, fetchMessages, logoutUser, currentUser, formatedLastMessaeDate, loading }) {
 
     useEffect(() => {
         fetchChatData()
@@ -33,29 +34,31 @@ export default function Sidebar({ handleChatForm, chats, fetchChatData, fetchMes
                     <div className="px-4 space-y-4">
                         <h4 className="text-sm text-gray-400">Recent</h4>
                         {
-                            chats && chats.map((chat, index) => (
+                            loading['getChats'] ? <PageSpinner /> :
+                                (
+                                    chats && chats.map((chat, index) => (
 
 
-                                <div className="flex items-center justify-between cursor-pointer" key={index}>
-                                    {/* {console.log("chat Color:", chat.color)} */}
-                                    <div className="flex items-center gap-2">
-                                        <span className={`w-10 h-10 rounded-full border text-center place-content-center font-bold`} style={{ backgroundColor: chat?.color }}>{chat?.reciever?.userName[0]}</span>
-                                        <div onClick={() => fetchMessages({ chatId: chat._id, receiverId: chat.reciever?._id },)}>
-                                            <p className="font-medium text-white">{chat.reciever?.userName}</p>
-                                            <p className="text-xs text-gray-400">{chat.reciever?.bio}</p>
+                                        <div className="flex items-center justify-between cursor-pointer" key={index}>
+                                            {/* {console.log("chat Color:", chat.color)} */}
+                                            <div className="flex items-center gap-2">
+                                                <span className={`w-10 h-10 rounded-full border text-center place-content-center font-bold`} style={{ backgroundColor: chat?.color }}>{chat?.reciever?.userName[0]}</span>
+                                                <div onClick={() => fetchMessages({ chatId: chat._id, receiverId: chat.reciever?._id },)}>
+                                                    <p className="font-medium text-white">{chat.reciever?.userName}</p>
+                                                    <p className="text-xs text-gray-400">{chat.reciever?.bio}</p>
+                                                </div>
+                                            </div>
+                                            <div className="text-xs text-gray-400 flex flex-col items-end">
+                                                <p>
+                                                    {chat.lastMessageDate && formatedLastMessaeDate(chat.lastMessageDate)}
+                                                </p>
+                                                <p className="bg-[#ff5c5c] text-white text-sm w-fit h-fit rounded-full px-1">{chat.unseenCount > 0 && chat.unseenCount}</p>
+                                            </div>
+                                            {/* <span className="text-xs text-gray-400">05 min</span> */}
                                         </div>
-                                    </div>
-                                    <div className="text-xs text-gray-400 flex flex-col items-end">
-                                        <p>
-                                            {chat.lastMessageDate && formatedLastMessaeDate(chat.lastMessageDate)}
-                                        </p>
-                                        <p className="bg-[#ff5c5c] text-white text-sm w-fit h-fit rounded-full px-1">{chat.unseenCount > 0 && chat.unseenCount}</p>
-                                    </div>
-                                    {/* <span className="text-xs text-gray-400">05 min</span> */}
-                                </div>
-                            ))
+                                    ))
+                                )
                         }
-
                     </div>
                 </div>
             </div>

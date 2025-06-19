@@ -1,5 +1,8 @@
 "use client"
+import { loginFormValidate } from "@/formValidate/signInFormValidate"
+import { signUpFormValidate } from "@/formValidate/signUpFormValidate"
 import { getLoginData, getSignupData, signInUser, signupUser } from "@/redux/slice/authSlice"
+import { clearFormErrors } from "@/redux/slice/globalSlice"
 import { signOut } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useDispatch, useSelector } from "react-redux"
@@ -9,7 +12,7 @@ const UseAuthData = () => {
     const dispatch = useDispatch()
     const router = useRouter()
     const { loginData, signUpData } = useSelector((state) => state.auth);
-    const { loading, error } = useSelector((state) => state.global)
+    const { loading, error, formErrors } = useSelector((state) => state.global)
 
 
     const handleSignupData = (e) => {
@@ -22,19 +25,28 @@ const UseAuthData = () => {
         dispatch(getLoginData({ ...loginData, [name]: value }))
     }
 
-    const getUserSignUP =async (e) => {
+    const getUserSignUP = async (e) => {
         e.preventDefault();
-       const response=await dispatch(signupUser(signUpData)).unwrap()
-       if (!response.success) {
-        toast.error(`${response.message}`)
-        return
-       }
+        if (!signUpFormValidate(signUpData, dispatch)) {
+            return
+        }
 
-       router.push('/login')
+        const response = await dispatch(signupUser(signUpData)).unwrap()
+        if (!response.success) {
+            toast.error(`${response.message}`)
+            return
+        }
+        dispatch(clearFormErrors())
+        router.push('/login')
     }
+
 
     const getUserLogin = async (e) => {
         e.preventDefault();
+        if (!loginFormValidate(loginData, dispatch)) {
+            return
+        }
+
         const response = await dispatch(signInUser(loginData)).unwrap()
         if (!response.ok) {
             // router.push('/')
@@ -42,6 +54,7 @@ const UseAuthData = () => {
             return
             //  window.location.href = "/dashboard"
         }
+        dispatch(clearFormErrors())
         window.location.href = '/'
     }
 
@@ -49,6 +62,12 @@ const UseAuthData = () => {
         //  e.preventDefault();
         await signOut({ redirect: false });
         router.push("/login")
+    }
+
+
+    const goToThePage = (value) => {
+        dispatch(clearFormErrors())
+        router.push(`${value}`)
     }
 
     return {
@@ -60,7 +79,9 @@ const UseAuthData = () => {
         loginData,
         signUpData,
         loading,
-        error
+        error,
+        formErrors,
+        goToThePage
     }
 }
 

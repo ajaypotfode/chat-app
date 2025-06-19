@@ -4,13 +4,21 @@ const { createSlice, isPending, isFulfilled, isRejected } = require("@reduxjs/to
 
 const initialState = {
     error: {},
+    formErrors: {},
     loading: {}
 }
 
 const globalSlice = createSlice({
     name: "global",
     initialState,
-    reducers: {},
+    reducers: {
+        setFormErrors: (state, action) => {
+            state.formErrors = action.payload;
+        },
+        clearFormErrors: (state) => {
+            state.formErrors = {};
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addMatcher(isPending, (state, action) => {
@@ -34,6 +42,6 @@ const globalSlice = createSlice({
 
     }
 })
-export const { } = globalSlice.actions
+export const { setFormErrors, clearFormErrors } = globalSlice.actions
 
 export default globalSlice.reducer
