@@ -6,7 +6,7 @@ export const signupUserAPI = async (userData) => {
     let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'http://localhost:3000/api/sign-up',
+        url: '/api/sign-up',
         headers: {
             'Content-Type': 'application/json',
         },

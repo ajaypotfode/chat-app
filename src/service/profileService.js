@@ -4,7 +4,7 @@ export const getProfileDataAPI = async () => {
     let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: `http://localhost:3000/api/profile`,
+        url: `/api/profile`,
         headers: {
             'Content-Type': 'application/json',
         },
@@ -30,7 +30,7 @@ export const updateBioAPI = async (bio) => {
     let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: `http://localhost:3000/api/change-bio`,
+        url: `/api/change-bio`,
         headers: {
             'Content-Type': 'application/json',
         },

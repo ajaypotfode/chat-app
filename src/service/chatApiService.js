@@ -5,7 +5,7 @@ export const getChatAPI = async () => {
     let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: 'http://localhost:3000/api/chat',
+        url: '/api/chat',
         headers: {
             'Content-Type': 'application/json',
         }
@@ -29,7 +29,7 @@ export const addChatAPI = async (chatData) => {
     let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'http://localhost:3000/api/chat',
+        url: '/api/chat',
         headers: {
             'Content-Type': 'application/json',
         },
@@ -51,7 +51,7 @@ export const deleteChatAPI = async (chatId) => {
     let config = {
         method: 'delete',
         maxBodyLength: Infinity,
-        url: 'http://localhost:3000/api/chat',
+        url: '/api/chat',
         headers: {
             'Content-Type': 'application/json',
         },

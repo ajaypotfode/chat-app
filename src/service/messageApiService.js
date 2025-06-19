@@ -7,7 +7,7 @@ export const getChatMessageAPI = async ({ chatId, receiverId }) => {
     let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: `http://localhost:3000/api/chat/message/${chatId}?receiverId=${receiverId}`,
+        url: `/api/chat/message/${chatId}?receiverId=${receiverId}`,
         headers: {
             'Content-Type': 'application/json',
         },
@@ -32,7 +32,7 @@ export const addChatMessageAPI = async (messageData) => {
     let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: `http://localhost:3000/api/chat/message/${messageData.chatId}`,
+        url: `/api/chat/message/${messageData.chatId}`,
         headers: {
             'Content-Type': 'application/json',
         },
@@ -55,7 +55,7 @@ export const clearUnseenMessageAPI = async (chatId) => {
     let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: `http://localhost:3000/api/chat/message/clearunseen-message?chatId=${chatId}`,
+        url: `/api/chat/message/clearunseen-message?chatId=${chatId}`,
         headers: {
             'Content-Type': 'application/json',
         }
