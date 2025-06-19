@@ -63,6 +63,6 @@ io.on('connection', (socket) => {
   });
 })
 
-server.listen(4000, () =>
+server.listen(process.env.PORT || 4000, () =>
   console.log('Socket.IO server running at http://localhost:4000')
 )
