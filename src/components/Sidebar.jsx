@@ -39,7 +39,7 @@ export default function Sidebar({ handleChatForm, chats, fetchChatData, fetchMes
                                 <div className="flex items-center justify-between cursor-pointer" key={index}>
                                     {/* {console.log("chat Color:", chat.color)} */}
                                     <div className="flex items-center gap-2">
-                                        <span className={`w-10 h-10 rounded-full border text-center place-content-center font-bold`} /* style={{ backgroundColor: chat?.color }}*/ >{chat?.reciever?.userName[0]}</span>
+                                        <span className={`w-10 h-10 rounded-full border text-center place-content-center font-bold`} style={{ backgroundColor: chat?.color }}>{chat?.reciever?.userName[0]}</span>
                                         <div onClick={() => fetchMessages({ chatId: chat._id, receiverId: chat.reciever?._id },)}>
                                             <p className="font-medium text-white">{chat.reciever?.userName}</p>
                                             <p className="text-xs text-gray-400">{chat.reciever?.bio}</p>
