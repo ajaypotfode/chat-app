@@ -40,7 +40,7 @@ export const GET = async (req) => {
         // const response = await User.find()
 
         if (!response) {
-            return NextResponse.json({ message: "with this Email user Not Logged In!!", success: false, result: {} }, { status: 200 })
+            return NextResponse.json({ message: "with this Email user Not Logged In!!", success: false, result: {} }, { status: 400 })
         }
 
         return NextResponse.json({ message: "User Fetched SuccessFully!!", success: true, result: response }, { status: 200 })

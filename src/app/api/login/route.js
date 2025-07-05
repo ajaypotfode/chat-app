@@ -12,11 +12,11 @@ export const POST = async (req) => {
         })
 
         if (!result?.ok) {
-            return NextResponse.json({ success: false, message: "Invalid credentials" });
+            return NextResponse.json({ success: false, message: "Invalid credentials" }, { status: 400 });
         }
 
         return NextResponse.json({ success: true, token: result });
     } catch (error) {
-        return NextResponse.json({ success:false, message:"failed "});
+        return NextResponse.json({ success: false, message: "failed " });
     }
 }

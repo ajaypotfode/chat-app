@@ -14,7 +14,7 @@ export const GET = async (req, res) => {
         await connectDatabase();
         // this is go through entire chat collection and return matched participants array
         const userChats = await Chat.find({ partcipants: userId })
-            .populate("partcipants", "userName bio")//this is use to get details of user, cause in chatModel (participants) we refer to "users" collection
+            .populate("partcipants", "userName bio")//this is use to get details of user, cause in chatModel (to participants field) we refer to "users" collection
 
         const result = await Promise.all(userChats.map(async (chat) => {
 

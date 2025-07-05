@@ -34,10 +34,10 @@ export async function middleware(request) {
 
 export const config = {
     matcher: [
+        '/',
         '/api/chat',
         '/api/chat/message/:path*',
         '/api/auth/:path*',
-        '/',
         '/login',
         '/signup'
     ]

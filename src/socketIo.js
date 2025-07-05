@@ -15,7 +15,7 @@ const server = createServer(app)
 
 const io = new Server(server, {
   cors: {
-    origin: '*'
+    origin: ['http://localhost:3000/', process.env.CLIENT_URL]
   }
 })
 
@@ -64,5 +64,5 @@ io.on('connection', (socket) => {
 })
 
 server.listen(process.env.PORT || 4000, () =>
-  console.log('Socket.IO server running at http://localhost:4000')
+  console.log('Socket.IO server running')
 )
