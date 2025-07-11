@@ -10,6 +10,7 @@ export default function Sidebar({
     fetchMessages,
     currentUser,
     loading,
+    formatedLastMessaeDate,
     sidebar,
     setSidebar }) {
 
@@ -69,8 +70,8 @@ export default function Sidebar({
                                             </div>
                                             <div className="text-xs text-gray-400 flex flex-col items-end whitespace-nowrap">
                                                 <p>
-                                                    {/* {chat.lastMessageDate && formatedLastMessaeDate(chat.lastMessageDate)} */}
-                                                    12-02-2025
+                                                    {chat.lastMessageDate && formatedLastMessaeDate(chat.lastMessageDate)}
+                                                    {/* 12-02-2025 */}
                                                 </p>
                                                 <p className="bg-[#ff5c5c] text-white text-sm w-fit h-fit rounded-full px-1">{chat.unseenCount > 0 && chat.unseenCount}</p>
                                             </div>
