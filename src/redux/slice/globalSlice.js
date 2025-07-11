@@ -5,7 +5,8 @@ const { createSlice, isPending, isFulfilled, isRejected } = require("@reduxjs/to
 const initialState = {
     error: {},
     formErrors: {},
-    loading: {}
+    loading: {},
+    // sidebar: true
 }
 
 const globalSlice = createSlice({
@@ -18,6 +19,9 @@ const globalSlice = createSlice({
         clearFormErrors: (state) => {
             state.formErrors = {};
         },
+        // handleSidebar: (state, action) => {
+        //     state.sidebar = !state.sidebar
+        // }
     },
     extraReducers: (builder) => {
         builder
@@ -42,6 +46,6 @@ const globalSlice = createSlice({
 
     }
 })
-export const { setFormErrors, clearFormErrors } = globalSlice.actions
+export const { setFormErrors, clearFormErrors, handleSidebar } = globalSlice.actions
 
 export default globalSlice.reducer

@@ -40,9 +40,9 @@ export default function LoginPage() {
                 Login
               </button>
             </form>
-            <p className="text-sm text-gray-400 text-center mt-4 flex justify-center">
-              Don't have an account? <div onClick={() => goToThePage('/signup')} className="text-[#F25C5C] hover:underline cursor-pointer">Sign up</div>
-            </p>
+            <div className="text-sm text-gray-400 text-center mt-4 flex justify-center">
+              Don't have an account? <span onClick={() => goToThePage('/signup')} className="text-[#F25C5C] hover:underline cursor-pointer">Sign up</span>
+            </div>
           </div>
           )
       }

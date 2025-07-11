@@ -61,7 +61,8 @@ const UseAuthData = () => {
     const getUserLogout = async () => {
         //  e.preventDefault();
         await signOut({ redirect: false });
-        router.push("/login")
+        // router.push("/login")
+        window.location.href = '/login'
     }
 
 

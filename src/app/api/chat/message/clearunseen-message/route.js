@@ -14,7 +14,7 @@ export const POST = async (req) => {
 
         await Messages.findOneAndUpdate(
             { chatId },
-            { $set: { 'messages.$[msg].seen': true } },//this is use to target element from an array "messages.$[elem].seen"(elem will be anything eg.msg)
+            { $set: { 'messages.$[msg].seen': true } },//this is use to target element from an array "messages.$[element].seen"(elem will be anything eg.msg)
             {
                 arrayFilters: [
                     { 'msg.sender': { $ne: userId }, 'msg.seen': false }

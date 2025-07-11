@@ -61,6 +61,7 @@ const initialState = {
     chatData: {},
     chats: [],
     chatForm: null,
+    sidebar: true
     // avatarBg:{},
 }
 
@@ -101,6 +102,9 @@ const chatSlice = createSlice({
             }
             state.chatForm = action.payload
         },
+        handleSidebar: (state, action) => {
+            state.sidebar = !state.sidebar
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -120,5 +124,5 @@ const chatSlice = createSlice({
     }
 })
 
-export const { getChatData, getchatForm, getLastMessageDate, getUnseenMessageCount, clearUnseenMessageCount } = chatSlice.actions
+export const { getChatData, getchatForm, getLastMessageDate, getUnseenMessageCount, clearUnseenMessageCount,handleSidebar } = chatSlice.actions
 export default chatSlice.reducer

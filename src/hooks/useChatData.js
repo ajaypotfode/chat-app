@@ -1,13 +1,15 @@
 "use client"
-import { addChats, deleteChat, getChatData, getchatForm, getChats, getUsers } from "@/redux/slice/chatSlice";
+import { addChats, deleteChat, getChatData, getchatForm, getChats, getUsers, handleSidebar } from "@/redux/slice/chatSlice";
 import { format, parseISO } from "date-fns";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { toast } from "react-toastify";
 
 const UseChatData = () => {
-    const { chatData, chats, chatForm } = useSelector((state) => state.chats)
-      const { loading} = useSelector((state) => state.global)
+    const { chatData, chats, chatForm, sidebar } = useSelector((state) => state.chats)
+    const { loading } = useSelector((state) => state.global)
     const dispatch = useDispatch();
+    // const [sidebar, setSidebar] = useState(true)
 
 
 
@@ -53,12 +55,11 @@ const UseChatData = () => {
         }
     }
 
+    const setSidebar = () => {
+        dispatch(handleSidebar())
+    }
 
-    // const getColor = () => {
-    //     const colors = ['[#ff5c5c]', '[#00ff7b]', '[#00d0ff]', '[#a200ff]', '[#ff00c8]', '[#91ff00]'];
-    //     const index = Math.floor(Math.random() * colors.length)
-    //     return colors[index]
-    // }
+
 
     return {
         handleChataData,
@@ -70,7 +71,9 @@ const UseChatData = () => {
         chatForm,
         chats,
         formatedLastMessaeDate,
-        loading
+        loading,
+        sidebar,
+        setSidebar
         // getColor
 
     }

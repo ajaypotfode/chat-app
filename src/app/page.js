@@ -16,7 +16,7 @@ import { FormSpinner } from "@/components/Loaders";
 // import Image from "next/image";
 
 export default function Home() {
-  const { handleChataData, handleChatForm, fetchChatData, generateChat, handleDeleteChat, chatData, chatForm, chats, formatedLastMessaeDate, loading } = UseChatData()
+  const { handleChataData, handleChatForm, fetchChatData, generateChat, handleDeleteChat, chatData, chatForm, chats, formatedLastMessaeDate, loading, sidebar, setSidebar } = UseChatData()
   const { fetchMessageData, addMessageData, messages, messageData, socketMessage, currentChat, handleMessageData } = UseMessageData()
 
   const dispatch = useDispatch()
@@ -29,8 +29,6 @@ export default function Home() {
     chats.forEach(chat => {
       socket.emit('join-chat', chat._id)
     });
-
-    // console.log("loged in User Is :", Math.floor(random);
 
   }, [chats])
 
@@ -58,49 +56,54 @@ export default function Home() {
       socket.off('private-message');
       socket.off('chat-data')
     };
-  }, [session])
+  }, [])
 
 
 
 
   return (
-    <div className="flex h-screen">
-      <Sidebar
-        handleChatForm={handleChatForm}
-        chats={chats}
-        handleDeleteChat={handleDeleteChat}
-        fetchChatData={fetchChatData}
-        fetchMessages={fetchMessageData}
-        // logoutUser={getUserLogout}
-        currentUser={session?.user}
-        formatedLastMessaeDate={formatedLastMessaeDate}
-        loading={loading}
-      // getColor={getColor}
-      />
-      <ChatBox
-        // fetchMessageData={ }
-        addMessageData={addMessageData}
-        messageData={messageData}
-        messages={messages}
-        handleMessageData={handleMessageData}
-        socketMessage={socketMessage}
-        currentUser={session?.user?.userId}
-        currentChat={currentChat}
-
-      />
-
-      {
-        chatForm === 'addChat' && <AddChat
+    <div className="h-screen overflow-y-hidden">
+      <div className="flex h-full">
+        <Sidebar
           handleChatForm={handleChatForm}
-          generateChat={generateChat}
-          chatData={chatData}
-          handleChataData={handleChataData}
+          chats={chats}
+          handleDeleteChat={handleDeleteChat}
+          fetchChatData={fetchChatData}
+          fetchMessages={fetchMessageData}
+          // logoutUser={getUserLogout}
+          currentUser={session?.user}
+          formatedLastMessaeDate={formatedLastMessaeDate}
           loading={loading}
+          sidebar={sidebar}
+          setSidebar={setSidebar}
+        // getColor={getColor}
         />
-      }
-      {
-        chatForm === 'profile' && <Profile handlechatForm={handleChatForm} loading={loading} />
-      }
+        <ChatBox
+          // fetchMessageData={ }
+          addMessageData={addMessageData}
+          messageData={messageData}
+          messages={messages}
+          handleMessageData={handleMessageData}
+          socketMessage={socketMessage}
+          currentUser={session?.user?.userId}
+          currentChat={currentChat}
+          setSidebar={setSidebar}
+
+        />
+
+        {
+          chatForm === 'addChat' && <AddChat
+            handleChatForm={handleChatForm}
+            generateChat={generateChat}
+            chatData={chatData}
+            handleChataData={handleChataData}
+            loading={loading}
+          />
+        }
+        {
+          chatForm === 'profile' && <Profile handlechatForm={handleChatForm} loading={loading} />
+        }
+      </div>
     </div>
 
   );

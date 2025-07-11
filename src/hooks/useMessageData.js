@@ -20,7 +20,7 @@ const UseMessageData = () => {
     //     dispatch(getchatForm())
     // }
 
-    const fetchMessageData = (messageData) => {
+    const fetchMessageData =async (messageData) => {
         // if (messageData.currentuser !== messageData.receiverId) {
         //     dispatch(clearUnseenMessageCount(messageData.chatId))
         // }

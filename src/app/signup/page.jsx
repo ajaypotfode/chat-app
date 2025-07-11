@@ -48,9 +48,9 @@ export default function SignupPage() {
                                 Sign Up
                             </button>
                         </form>
-                        <p className="text-sm text-gray-400 text-center mt-4 flex justify-center">
-                            Already have an account? <div onClick={()=>goToThePage('/login')} className="text-[#F25C5C] hover:underline cursor-pointer">Log in</div>
-                        </p>
+                        <div className="text-sm text-gray-400 text-center mt-4 flex justify-center">
+                            Already have an account? <span onClick={()=>goToThePage('/login')} className="text-[#F25C5C] hover:underline cursor-pointer">Log in</span>
+                        </div>
                     </div>)
             }
         </div>
