@@ -26,12 +26,12 @@ const Profile = ({ handlechatForm, loading }) => {
             }}
         >
             {/* <div className="min-h-screen bg-[#1E1E1E] flex items-center justify-center"> */}
-            <div className="bg-[#2A2A2A] p-8 rounded-2xl w-full max-w-md shadow-lg flex flex-col justify-center items-center" onClick={(e) => e.stopPropagation()}>
+            <div className="bg-[#2A2A2A] p-8 rounded-2xl w-full max-w-md shadow-lg flex flex-col justify-center items-center text-white" onClick={(e) => e.stopPropagation()}>
                 {
                     loading['getProfileData'] ? <PageSpinner /> :
                         (
                             <>
-                                <div className='w-20 h-20 rounded-full border text-center place-content-center text-4xl font-bold '>
+                                <div className='w-20 h-20 rounded-full border text-center place-content-center text-4xl font-bold  '>
                                     {profileData?.userName?.[0]}
                                 </div>
                                 <div className='profile-name mt-2 w-full'>
