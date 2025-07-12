@@ -56,7 +56,7 @@ export default function Home() {
       socket.off('private-message');
       socket.off('chat-data')
     };
-  }, [])
+  }, [session])
 
 
 
