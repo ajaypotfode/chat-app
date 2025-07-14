@@ -91,7 +91,7 @@ const ProfileImage = ({ image, handleImageUpdateClick, updateImage, handleImageU
     return (
         <>
             {image ? <>
-                <div className='relative border border-red-700'>
+                <div className='relative'>
                     <Image src={image} className="h-20 w-20 rounded-full border " width={120} height={120} quality={100} alt='/images/profile-image.png' />
                     {loading['uploadImage'] && <SmallComponentSpinner />}
                 </div>
