@@ -28,7 +28,7 @@ export const authOptions = {
                         throw new Error(`Invalid Password For ${email}`)
                     }
 
-                    return { userId: user._id, username: user.userName, email: user.email }
+                    return { userId: user._id, username: user.userName, email: user.email, image: user.image }
 
                 } catch (error) {
                     throw new Error(`login Filed!! ${error}`)

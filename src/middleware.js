@@ -4,8 +4,6 @@ import { NextResponse } from "next/server";
 export async function middleware(request) {
     const { pathname } = request.nextUrl
     const token = await getToken({ req: request })
-
-    // console.log("token is :",token);
     
 
     const protectedServerRoute = [

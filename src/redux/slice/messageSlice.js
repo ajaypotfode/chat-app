@@ -74,6 +74,8 @@ const messageSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getMessage.fulfilled, (state, action) => {
+                console.log("messaeges is :", action.payload?.result[0]);
+
                 state.messages = action.payload?.result
                 state.currentChat.chatId = action.payload?.result[0]?.chatId
                 state.currentChat.senderId = action.payload?.result[0]?.senderId

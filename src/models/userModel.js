@@ -22,9 +22,13 @@ const userSchema = new mongoose.Schema({
     bio: {
         type: String,
         default: "Hey I am Using, Chat Box"
+    },
+    image: {
+        type: String,
+        default: '/images/profile-image.png'
     }
 })
 
-const User = mongoose.models.users || mongoose.model("users", userSchema)
+const User = mongoose.models.chatusers || mongoose.model("chatusers", userSchema)
 
 export default User

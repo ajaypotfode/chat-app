@@ -5,6 +5,7 @@ import { clearBackendUnseenMessageCount } from "@/redux/slice/messageSlice"
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import EmptyChat from "./EmptyChat"
+import Image from "next/image"
 
 
 const ChatBox = ({ addMessageData, messages, messageData, currentChat, handleMessageData, currentUser, setSidebar }) => {
@@ -26,10 +27,13 @@ const ChatBox = ({ addMessageData, messages, messageData, currentChat, handleMes
         messages.length > 0 ? messages.map((message, index) => (
             <>
                 <div className=" flex-1 flex flex-col bg-[#141518]" key={index}>
-                    <div className="px-6 py-4 border-b border-[#2b2d3a] text-white font-medium flex items-start " >
-                        <button className="md:hidden text-white text-3xl font-bold mr-5" onClick={setSidebar}>
+                    <div className="md:px-6 px-3 py-4 border-b border-[#2b2d3a] text-white font-medium flex items-start " >
+                        <button className="md:hidden text-white text-3xl font-bold mr-3" onClick={setSidebar}>
                             <i className="bi bi-arrow-left"></i>
                         </button>
+                        <span className={`w-8 h-8 rounded-full border text-center place-content-center font-bold mr-3 `}>
+                            <Image src={message.receiverId?.image} className="h-full w-full rounded-full " width={120} height={120} quality={100} alt='/images/profile-image.png' />
+                        </span>
                         <div className="flex flex-col">
                             <p> {message.receiverId?.userName}</p>
                             <p className="text-xs text-gray-400 slide-text "> {message.receiverId?.bio}</p>

@@ -4,7 +4,7 @@ const chatModel = new mongoose.Schema({
     partcipants: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "users",
+            ref: "chatusers",
             required: true
         },
     ],

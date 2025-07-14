@@ -3,7 +3,7 @@ import mongoose from "mongoose"
 const singleMessage = new mongoose.Schema({
     sender: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'users',
+        ref: 'chatusers',
         // required: true
     },
     content: {
@@ -33,12 +33,12 @@ const messageModel = new mongoose.Schema({
     // },
     receiverId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "users",
+        ref: "chatusers",
         required: true
     },
     senderId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "users",
+        ref: "chatusers",
         required: true
     },
     messages: [singleMessage]

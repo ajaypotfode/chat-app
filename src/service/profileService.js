@@ -13,8 +13,7 @@ export const getProfileDataAPI = async () => {
 
     try {
         const response = await axios.request(config)
-        console.log("profileData is :",response.data);
-        
+
         return response.data
     } catch (error) {
         console.error(error)
@@ -44,4 +43,26 @@ export const updateBioAPI = async (bio) => {
         console.error(error)
     }
 
+}
+
+
+export const updateProfilePictureAPI = async (image) => {
+    let data = JSON.stringify({ image })
+
+    let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: `/api/updateImage`,
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        data: data
+    };
+
+    try {
+        const response = await axios.request(config)
+        return response.data
+    } catch (error) {
+        console.error(error)
+    }
 }

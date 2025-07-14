@@ -27,7 +27,7 @@ export const GET = async (req, { params }) => {
 
         // and here get Entire chat Messages
         const messages = await Messages.find({ chatId })
-            .populate("receiverId", "userName bio")
+            .populate("receiverId", "userName bio image")
 
         if (!messages) {
             return NextResponse.json({ message: "message not Found!!", success: false, result: [] }, { status: 200 })
@@ -57,7 +57,7 @@ export const POST = async (req, { params }) => {
             { chatId },
             { $push: { messages: newMessage } },
             { upsert: true, new: true }
-        ).populate("receiverId", "userName")
+        ).populate("receiverId", "userName image")
 
 
 

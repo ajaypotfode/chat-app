@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { PageSpinner } from "./Loaders";
+import Image from "next/image";
 
 export default function Sidebar({
     handleChatForm,
@@ -12,10 +13,12 @@ export default function Sidebar({
     loading,
     formatedLastMessaeDate,
     sidebar,
-    setSidebar }) {
+    setSidebar,
+    getProfileData }) {
 
     useEffect(() => {
         fetchChatData()
+        getProfileData()
     }, [])
 
 
@@ -37,9 +40,10 @@ export default function Sidebar({
                         } */}
                     <span
                         onClick={() => handleChatForm('profile')}
-                        className="w-10 h-10 rounded-full border text-center place-content-center bg-[#ff5c5c] font-bold cursor-pointer"
+                        className="w-10 h-10 rounded-full border text-center place-content-center font-bold cursor-pointer"
                     >
-                        {currentUser?.username[0]}
+                        {/* {currentUser?.username[0]} */}
+                        {currentUser && <Image src={currentUser} className="h-full w-full rounded-full " width={120} height={120} quality={100} alt='/images/profile-image.png' />}
                     </span>
                     <div className="ml-3">
 
@@ -59,10 +63,12 @@ export default function Sidebar({
                                         <div className="flex items-center justify-between cursor-pointer w-full" key={index}>
                                             {/* {console.log("chat Color:", chat.color)} */}
                                             <div className="flex items-center gap-2">
-                                                <span className={`w-10 h-10 rounded-full border text-center place-content-center font-bold`} style={{ backgroundColor: chat?.color }}>{chat?.reciever?.userName[0]}</span>
-                                                <div onClick={() =>{
-                                                     fetchMessages({ chatId: chat._id, receiverId: chat.reciever?._id })
-                                                     setSidebar()
+                                                <span className={`w-10 h-10 rounded-full border text-center place-content-center font-bold `} /*style={{ backgroundColor: chat?.color }}*/>
+                                                    <Image src={chat.reciever?.image} className="h-full w-full rounded-full " width={120} height={120} quality={100} alt='/images/profile-image.png' />
+                                                </span>
+                                                <div onClick={() => {
+                                                    fetchMessages({ chatId: chat._id, receiverId: chat.reciever?._id })
+                                                    setSidebar()
                                                 }}>
                                                     <p className="font-medium text-white">{chat.reciever?.userName}</p>
                                                     <p className="text-xs text-gray-400 truncate w-40 ">{chat.reciever?.bio}</p>

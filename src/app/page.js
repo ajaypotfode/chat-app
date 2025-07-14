@@ -13,11 +13,13 @@ import { useDispatch } from "react-redux";
 import { useSession } from "next-auth/react";
 import Profile from "@/components/Profile";
 import { FormSpinner } from "@/components/Loaders";
+import UseProfileData from "@/hooks/useProfileData";
 // import Image from "next/image";
 
 export default function Home() {
   const { handleChataData, handleChatForm, fetchChatData, generateChat, handleDeleteChat, chatData, chatForm, chats, formatedLastMessaeDate, loading, sidebar, setSidebar } = UseChatData()
   const { fetchMessageData, addMessageData, messages, messageData, socketMessage, currentChat, handleMessageData } = UseMessageData()
+  const {profileData,getProfileData}=UseProfileData()
 
   const dispatch = useDispatch()
   const { data: session, status } = useSession()
@@ -61,6 +63,7 @@ export default function Home() {
 
 
 
+
   return (
     <div className="h-screen overflow-y-hidden">
       <div className="flex h-full">
@@ -71,11 +74,12 @@ export default function Home() {
           fetchChatData={fetchChatData}
           fetchMessages={fetchMessageData}
           // logoutUser={getUserLogout}
-          currentUser={session?.user}
+          currentUser={profileData?.image}
           formatedLastMessaeDate={formatedLastMessaeDate}
           loading={loading}
           sidebar={sidebar}
           setSidebar={setSidebar}
+          getProfileData={getProfileData}
         // getColor={getColor}
         />
         <ChatBox

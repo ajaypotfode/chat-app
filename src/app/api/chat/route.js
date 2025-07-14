@@ -14,7 +14,7 @@ export const GET = async (req, res) => {
         await connectDatabase();
         // this is go through entire chat collection and return matched participants array
         const userChats = await Chat.find({ partcipants: userId })
-            .populate("partcipants", "userName bio")//this is use to get details of user, cause in chatModel (to participants field) we refer to "users" collection
+            .populate("partcipants", "userName bio image")//this is use to get details of user, cause in chatModel (to participants field) we refer to "users" collection
 
         const result = await Promise.all(userChats.map(async (chat) => {
 
@@ -37,12 +37,12 @@ export const GET = async (req, res) => {
 
 
 
-            const getColor = () => {
-                const colors = ['#ff5c5c', '#5cff77', '#eb8314', '#00ffd9', '#14a0eb', '#8014eb', '#00ff33', '#ff0000', '#ff00ee', '#00affa']
-                const index = Math.floor(Math.random() * 10)
+            // const getColor = () => {
+            //     const colors = ['#ff5c5c', '#5cff77', '#eb8314', '#00ffd9', '#14a0eb', '#8014eb', '#00ff33', '#ff0000', '#ff00ee', '#00affa']
+            //     const index = Math.floor(Math.random() * 10)
 
-                return colors[index]
-            }
+            //     return colors[index]
+            // }
 
 
             return {
@@ -52,7 +52,7 @@ export const GET = async (req, res) => {
                 reciever,
                 createdAt: chat.createdAt,
                 updatedAt: chat.updatedAt,
-                color: getColor()
+                // color: getColor()
             }
         }))
 
@@ -84,7 +84,7 @@ export const POST = async (req, res) => {
         await createChat.save();
 
         // create empty message For chat
-        const user = await createChat.populate("partcipants", "userName bio");
+        const user = await createChat.populate("partcipants", "userName bio image");
 
         const receiver = user.partcipants.find(
             participant => participant._id.toString() !== userId.toString()
@@ -104,16 +104,16 @@ export const POST = async (req, res) => {
 
 
         //give colors to chats
-        const getColor = () => {
-            const colors = ['#ff5c5c', '#5cff77', '#eb8314', '#00ffd9', '#14a0eb', '#8014eb', '#00ff33', '#ff0000', '#ff00ee', '#00affa']
-            const index = Math.floor(Math.random() * 10)
-            return colors[index]
-        }
+        // const getColor = () => {
+        //     const colors = ['#ff5c5c', '#5cff77', '#eb8314', '#00ffd9', '#14a0eb', '#8014eb', '#00ff33', '#ff0000', '#ff00ee', '#00affa']
+        //     const index = Math.floor(Math.random() * 10)
+        //     return colors[index]
+        // }
 
         // it is use to send reciever Name 
         const result = user.toObject();//it is use to convert mongodb Doc into plain Obj
         result.reciever = receiver
-        result.color = getColor()
+        // result.color = getColor()
 
         return NextResponse.json({ message: "user SuccessFully Added In your Chat!!", success: true, result: result }, { status: 200 })
 

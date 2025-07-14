@@ -2,11 +2,11 @@
 export const SmallComponentSpinner = () => {
   return (
     // <div className='flex gap-5 w-[100%] h-20 border-2'>
-    <div className='px-4 sm:py-2 md:py-1 rounded-full text-gray-800 lg:px-6 border'>
-      <div className="flex justify-center">
+    // <div className='px-4 sm:py-2 md:py-1 rounded-full text-gray-800 lg:px-6 border'>
+      <div className="flex justify-center absolute top-6 left-6 opacity-45">
         <div className="sm:w-8 sm:h-8 w-6 h-6 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
       </div>
-    </div>
+    // </div>
 
   )
 }
